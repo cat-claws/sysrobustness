@@ -1,0 +1,3 @@
+[submodule "retinaface"]
+	path = retinaface
+	url = https://github.com/zhangruihan1/retinaface.git
