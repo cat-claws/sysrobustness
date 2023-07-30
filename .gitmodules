@@ -1,3 +1,9 @@
 [submodule "retinaface"]
 	path = retinaface
 	url = https://github.com/zhangruihan1/retinaface.git
+[submodule "robface"]
+	path = robface
+	url = https://github.com/zhangruihan1/robface.git
+[submodule "insightface"]
+	path = insightface
+	url = https://github.com/deepinsight/insightface.git

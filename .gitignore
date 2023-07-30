@@ -3,3 +3,8 @@ lfw*/*
 __py*
 __py*/*
 */__py*/*
+pretrained/*/*.pth
+data/*
+data/*/*
+models/*
+models/*/*
