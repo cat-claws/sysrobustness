@@ -1,0 +1,6 @@
+Files already downloaded and verified
+Loading pretrained model from retinaface/weights/retinaface_resnet50_2020-07-20.pth
+remove prefix 'module.'
+Missing keys:0
+Unused checkpoint keys:0
+Used keys:456
