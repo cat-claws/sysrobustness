@@ -17,6 +17,7 @@ x1, x2, y = next(iter(test_loader))
 
 model = get_model('r18').cuda()
 model.load_state_dict(torch.load('pretrained/arcface/glint360k_cosface_r18_fp16_0.1.pth'))
+model.eval()
 
 resize = torchvision.transforms.Resize(112)
 class Recognition:
