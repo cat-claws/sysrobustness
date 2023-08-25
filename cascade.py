@@ -112,14 +112,11 @@ attack = torchattacks.Square_(dr, device='cuda', norm='Linf', eps=8/255, n_queri
 
 from tqdm import tqdm
 results = []
-<<<<<<< HEAD:test1.py
 for x1, _, y in tqdm(test_loader):
     x1 = x1.cuda()
     boxes = detect(x1).data
     faces = crop_images_with_boxes(x1, boxes)
     feat = recognition(faces.cuda())
-=======
->>>>>>> ef7ec949f650f7635bef920377fc7c237b1f26c2:cascade.py
 
 with open(args.ckpt.replace('.pth', '-cas.txt'), 'w') as f:
     for x1, _, y in tqdm(test_loader):
