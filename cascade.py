@@ -11,7 +11,13 @@ test_loader = torch.utils.data.DataLoader(lfw_pairs, batch_size = 4, num_workers
 x1, x2, y = next(iter(test_loader))
 
 from retinaface import retinaface_resnet50
-detect = retinaface_resnet50('pretrained/retinaface/retinaface_resnet50_2020-07-20.pth')
+
+import argparse
+parser = argparse.ArgumentParser(description='Retinaface Testing')
+parser.add_argument('--ckpt', default=None, help='checkpoint for testing')
+args = parser.parse_args()
+detect = retinaface_resnet50(args.ckpt)
+# detect = retinaface_resnet50('pretrained/retinaface/retinaface_resnet50_2020-07-20.pth')
 # detect = retinaface_resnet50('pretrained/retinaface/retinaface_resnet50_2020-07-20.pth')
 
 
@@ -106,29 +112,39 @@ attack = torchattacks.Square_(dr, device='cuda', norm='Linf', eps=8/255, n_queri
 
 from tqdm import tqdm
 results = []
+<<<<<<< HEAD:test1.py
 for x1, _, y in tqdm(test_loader):
     x1 = x1.cuda()
     boxes = detect(x1).data
     faces = crop_images_with_boxes(x1, boxes)
     feat = recognition(faces.cuda())
+=======
+>>>>>>> ef7ec949f650f7635bef920377fc7c237b1f26c2:cascade.py
 
-    # adv_images = attack(x1, boxes.clone())
-    # boxes_ = detect(adv_images)
+with open(args.ckpt.replace('.pth', '-cas.txt'), 'w') as f:
+    for x1, _, y in tqdm(test_loader):
+        boxes = detect(x1).data
+        faces = crop_images_with_boxes(x1, boxes)
+        feat = recognition(faces.cuda())
 
-    adv_images = attack(x1, feat.clone())
-    feat_ = dr(adv_images)
+        # adv_images = attack(x1, boxes.clone())
+        # boxes_ = detect(adv_images)
 
-    # print(feat.shape, feat_.shape)
+        adv_images = attack(x1, feat.clone())
+        feat_ = dr(adv_images)
 
-    for s in F.cosine_similarity(feat, feat_):
-        results.append(s.item())
-    # for b1, b2 in zip(boxes, boxes_):
-    #     results.append(torchvision.ops.box_iou(b1, b2).item())
-        print(sum(results)/len(results))
-    # if len(results)>40:
-    #     break
+        # print(feat.shape, feat_.shape)
+
+        for s in F.cosine_similarity(feat, feat_):
+            results.append(s.item())
+        # for b1, b2 in zip(boxes, boxes_):
+        #     results.append(torchvision.ops.box_iou(b1, b2).item())
+            f.write(str(sum(results)/len(results)))
+            f.write('\n')
+        # if len(results)>40:
+        #     break
 
 # adv_images = result.adv_images
 # best = result.best.tolist()
 
-print('robustness based on Cos Sim is: ', round(sum(results)/len(results), 4))
+f.write('robustness based on Cos Sim is: ' + str(round(sum(results)/len(results), 4)))
