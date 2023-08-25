@@ -11,8 +11,8 @@ test_loader = torch.utils.data.DataLoader(lfw_pairs, batch_size = 4, num_workers
 x1, x2, y = next(iter(test_loader))
 
 from retinaface import retinaface_resnet50
-detect = retinaface_resnet50('pretrained/retinaface/retinaface_resnet50_2020-07-20.pth')
 # detect = retinaface_resnet50('pretrained/retinaface/retinaface_resnet50_2020-07-20.pth')
+detect = retinaface_resnet50('pretrained/retinaface/Resnet50_Final.pth')
 
 
 model = get_model('r18').cuda()
